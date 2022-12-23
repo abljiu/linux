@@ -1,5 +1,6 @@
 #include "strbuf.h"
 
+
 //初始化函数
 void strbuf_init(struct strbuf *sb, size_t alloc);
 void strbuf_init(struct strbuf *sb, size_t alloc)
@@ -73,5 +74,24 @@ void strbuf_reset(struct strbuf *sb)
   {
    sb->buf[i]='\0';
    i++; 
+  }
+}
+
+//确保至少extra个字节可用
+void strbuf_grow(struct strbuf *sb, size_t extra);
+void strbuf_grow(struct strbuf *sb, size_t extra)
+{
+      if(sb -> len + extra < sb -> alloc) return;
+    sb -> buf = (char*)realloc(sb -> buf, sb -> len + extra + 1);
+    sb -> alloc = sb->len + extra + 1;
+}
+
+//向 sb 追加长度为 len 的数据 data
+void strbuf_add(struct strbuf *sb, const void *data, size_t len);
+void strbuf_add(struct strbuf *sb, const void *data, size_t len)
+{
+  if(sb->len+len>sb->alloc)
+  {
+    strbuf_grow(sb,len)
   }
 }
